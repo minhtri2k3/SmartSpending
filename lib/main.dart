@@ -5,12 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-final GoRouter _goRoute = GoRouter(initialLocation: '/',
-    routes: <RouteBase>[
-      GoRoute(path : '/', builder: (BuildContext context , GoRouterState state){
-         return BlocBuilder<>(builder: builder(context ,))
-      })
-    ]);
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Smart Spending',
       home: LoginScreen(),
     );
   }
