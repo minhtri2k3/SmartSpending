@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class SMLoginScreen extends StatelessWidget {
+  SMLoginScreen({super.key});
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   @override

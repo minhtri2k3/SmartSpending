@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class SMHomeScreen extends StatefulWidget {
+  const SMHomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SMHomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<SMHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
