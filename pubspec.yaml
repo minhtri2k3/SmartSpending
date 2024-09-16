@@ -42,10 +42,17 @@ dependencies:
   go_router: ^14.2.7
   firebase_auth: ^5.1.4
   get_it: ^7.7.0
+  flutter_native_splash: ^2.4.1
+  flutter_screenutil: ^5.9.3
+  sentry_flutter: ^8.9.0
+  logger: ^2.4.0
+  pretty_dio_logger: ^1.4.0
+  mobx: ^2.3.3+2
+  flutter_mobx: ^2.2.1+1
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  mobx_codegen: ^2.6.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

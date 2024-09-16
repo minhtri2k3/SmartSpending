@@ -1,11 +1,11 @@
 import '../core/export.dart';
-import '../screens/home_screen.dart';
 
-class SMRouter {
+class SMRouterService {
   late GoRouter router;
-  Future<SMRouter> init() async {
-    router = GoRouter(initialLocation: "/", routes: [GoRoute(path: "/home",
-    builder: (context , state ) =>  const SMHomeScreen())
+  Future<SMRouterService> init() async {
+    router = GoRouter(initialLocation: "/login", routes: [
+      GoRoute(path: '/home', builder: (context, state) => const SMHomeScreen()),
+      GoRoute(path: '/login', builder: (context, state) => SMLoginScreen())
     ]);
     return this;
   }
