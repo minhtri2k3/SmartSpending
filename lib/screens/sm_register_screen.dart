@@ -1,14 +1,21 @@
+import 'package:flutter/cupertino.dart';
 
 import '../core/export.dart';
-class SMLoginScreen extends StatelessWidget {
-  SMLoginScreen({super.key});
+import '../core/mixins.dart';
+import '../services/sm_auth_service.dart';
+
+class SMRegisterScreen extends StatelessWidget with SMServices {
+  SMRegisterScreen({super.key}) {
+    getServicesFuture = getServices();
+  }
+  late final Future getServicesFuture;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 170,
+        toolbarHeight: 200.sp,
         flexibleSpace: Container(
           decoration: _gradientBox,
         ),
@@ -18,7 +25,7 @@ class SMLoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Sign in to your',
+                'Register your new',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 26,
@@ -34,7 +41,7 @@ class SMLoginScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'Sign in to your account',
+                'Register your new account',
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 15,
@@ -56,6 +63,8 @@ class SMLoginScreen extends StatelessWidget {
                 ),
                 _emailTextField,
                 _passwordTextField,
+                _registerButton,
+                _registerText,
               ],
             ),
           ),
@@ -66,7 +75,7 @@ class SMLoginScreen extends StatelessWidget {
 
   Widget get _emailTextField {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.only(bottom: 30.sp),
       child: TextFormField(
         controller: _emailController,
         cursorColor: Colors.black,
@@ -109,7 +118,7 @@ class SMLoginScreen extends StatelessWidget {
 
   Widget get _passwordTextField {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 40),
+      padding: EdgeInsets.only(bottom: 40.sp),
       child: TextFormField(
         obscureText: true,
         controller: _passwordController,
@@ -164,7 +173,56 @@ class SMLoginScreen extends StatelessWidget {
       ),
     );
   }
-  // Widget get _loginButton {
-  //   return TextButton(onPressed: , child: Text('Login'));
-  // }
+
+  Widget get _registerButton {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 40.sp),
+      child: Container(
+        width: 1000.w,
+        decoration: BoxDecoration(
+          color: Colors.lightGreen, // Set the background color to green
+          borderRadius:
+              BorderRadius.circular(8.0), // Add border radius if needed
+        ),
+        child: TextButton(
+          onPressed: () => SMAuthService().register(
+              email: _emailController.text, password: _passwordController.text),
+          child: Text(
+            'Register',
+            style: TextStyle(
+              fontSize: 23.sp,
+              fontWeight: FontWeight.bold,
+              color:
+                  Colors.white, // Set text color to white for better contrast
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget get _registerText {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Already have an account?',
+          style: TextStyle(fontSize: 17.5.sp, color: Colors.grey),
+        ),
+        SizedBox(width: 10.w),
+        GestureDetector(
+          onTap: () {
+            router.push('/login');
+          },
+          child: Text(
+            'Login',
+            style: TextStyle(
+              fontSize: 17.5.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        )
+      ],
+    );
+  }
 }

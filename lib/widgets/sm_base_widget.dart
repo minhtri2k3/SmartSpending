@@ -26,10 +26,8 @@ abstract class SMBaseWidgetState<T extends SMBaseController>
   late final String controllerName;
 
   SMBaseWidgetState({
-    required String instanceName,
     required this.controller,
   }) {
-    this.instanceName = '${controller.widgetKey}$instanceName';
     this.controllerName = '${this.instanceName}Controller';
   }
 
