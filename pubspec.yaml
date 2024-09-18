@@ -50,6 +50,7 @@ dependencies:
   mobx: ^2.3.3+2
   flutter_mobx: ^2.2.1+1
   fluttertoast: ^8.2.8
+  flutter_colorpicker: ^1.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
