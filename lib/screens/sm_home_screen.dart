@@ -1,31 +1,67 @@
 
 import '../core/export.dart';
 
-class SMHomeScreen extends StatefulWidget {
-  const SMHomeScreen({super.key});
+part 'sm_home_screen.g.dart';
 
-  @override
-  State<SMHomeScreen> createState() => _HomeScreenState();
+class SMHomeScreenController = _SMHomeScreenController
+    with _$SMHomeScreenController;
+
+abstract class _SMHomeScreenController extends SMBaseController with Store{
+  @observable
+  bool loading = true;
+
+  @action
+  void setLoading(bool loading_) => loading = loading_;
+
+  @action
+  Future<void> getData() async{
+    try{
+
+    } on DioException catch (error, stackTrace) {
+      // onApiException(error, stackTrace);
+    } catch (error, stackTrace) {
+      logger.e(
+        error,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+  }
 }
 
-class _HomeScreenState extends State<SMHomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
+class SMHomeScreen extends SMBaseWidget<SMHomeScreenState> {
+  const SMHomeScreen({super.key, required super.state,});
 
-    );
-  }
-  Decoration get _gradientBox {
-    return const BoxDecoration(
-      gradient: LinearGradient(
-        colors: [
-          Color(0xff1E2E3D),
-          Color(0xff152534),
-          Color(0xff0C1C2E)
-        ], // Replace with your desired colors
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+
+  static SMHomeScreen create({
+    Key? key,
+    String? instanceName,
+  }) {
+    final SMHomeScreenController controller =
+    SMHomeScreenController();
+    return SMHomeScreen(
+      state: SMHomeScreenState(
+        controller: controller,
       ),
     );
   }
 }
+class SMHomeScreenState  extends SMBaseWidgetState<SMHomeScreenController>{
+    SMHomeScreenState({ required super.controller,});
+
+
+  @override
+  Widget build(BuildContext context) {
+     return mainBuilder(
+         (context) => Scaffold(
+           backgroundColor: Colors.white,
+           body: SafeArea(child: Container(
+             width: double.infinity,
+             height: double.infinity,
+           ),
+           ),
+         ),
+       onGetServicesDone: () => controller.getData(),
+     );
+  }}
+
