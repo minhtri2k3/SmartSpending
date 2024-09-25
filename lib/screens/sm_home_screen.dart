@@ -58,6 +58,12 @@ class SMHomeScreenState  extends SMBaseWidgetState<SMHomeScreenController>{
            body: SafeArea(child: Container(
              width: double.infinity,
              height: double.infinity,
+             color: SMColors.white1,
+             child : SingleChildScrollView(
+               child: Column(
+                 
+               ),
+             )
            ),
            ),
          ),
