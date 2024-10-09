@@ -26,8 +26,10 @@ abstract class SMBaseWidgetState<T extends SMBaseController>
   late final String controllerName;
 
   SMBaseWidgetState({
+    required String instanceName,
     required this.controller,
   }) {
+    this.instanceName = '${controller.widgetKey}$instanceName';
     this.controllerName = '${this.instanceName}Controller';
   }
 
@@ -35,7 +37,7 @@ abstract class SMBaseWidgetState<T extends SMBaseController>
     await getServices();
     registerController();
     await controller.getServices();
-    logger.d('Init Widget: $instanceName');
+    //logger.d('Init Widget: $instanceName');
   }
 
   @override
@@ -47,7 +49,7 @@ abstract class SMBaseWidgetState<T extends SMBaseController>
   @override
   void dispose() {
     unregisterController();
-    logger.d('Dispose Widget: $instanceName');
+  //  logger.d('Dispose Widget: $instanceName');
     super.dispose();
   }
 
@@ -56,7 +58,7 @@ abstract class SMBaseWidgetState<T extends SMBaseController>
       controller,
       instanceName: controllerName,
     );
-    logger.d('Register Controller: $controllerName');
+  //  logger.d('Register Controller: $controllerName');
   }
 
   void unregisterController() {
@@ -64,6 +66,6 @@ abstract class SMBaseWidgetState<T extends SMBaseController>
       instance: controller,
       instanceName: controllerName,
     );
-    logger.d('Unregister Controller: $controllerName');
+  //  logger.d('Unregister Controller: $controllerName');
   }
 }

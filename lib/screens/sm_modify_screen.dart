@@ -2,13 +2,13 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import '../core/export.dart';
 
-class SmModifyScreen extends StatefulWidget {
-  const SmModifyScreen({super.key});
+class SMModifyScreen extends StatefulWidget {
+  const SMModifyScreen({super.key});
   @override
-  _SmModifyScreenScreenState createState() => _SmModifyScreenScreenState();
+  _SMModifyScreenScreenState createState() => _SMModifyScreenScreenState();
 }
 
-class _SmModifyScreenScreenState extends State<SmModifyScreen> {
+class _SMModifyScreenScreenState extends State<SMModifyScreen> {
   final _nameController = TextEditingController();
   late Color _defaultColorButton = Colors.blueAccent;
   void changeColor(Color color) {

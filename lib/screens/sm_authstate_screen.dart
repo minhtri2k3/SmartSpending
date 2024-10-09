@@ -13,7 +13,8 @@ class SMAuthStateScreen extends StatelessWidget {
           return const CircularProgressIndicator();
         } else if (snapshot.hasData) {
           // If the user is logged in, navigate to the home screen
-          return  SmModifyScreen();
+          // return  SMHomeScreen.create();
+          return SMHomeScreen.create();
         } else {
           // If the user is not logged in, navigate to the login screen
           return SMRegisterScreen();

@@ -1,15 +1,17 @@
-import '../services/sm_theme_service.dart';
+
 import 'export.dart';
 
 mixin SMServices {
-  late final GoRouter router;
+  final GlobalKey widgetKey = GlobalKey();
   late final GetIt getIt = GetIt.instance;
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   late final SMRouterService routerService;
   late final SMThemeService themeService;
   late final FToast fToast;
-  late final Logger logger;
+  // late final Logger logger;
+
+  late final GoRouter router;
 
   bool getServicesDone = false;
 
@@ -19,7 +21,7 @@ mixin SMServices {
     routerService = await getIt.getAsync<SMRouterService>();
     themeService = await getIt.getAsync<SMThemeService>();
     fToast = await getIt.getAsync<FToast>();
-    logger = await getIt.getAsync<Logger>();
+    // logger = await getIt.getAsync<Logger>();
 
     router = routerService.router;
 
@@ -43,7 +45,7 @@ mixin SMWidgetMainBuilder on SMServices {
           return Container();
         }
         if (snapshot.hasError) {
-          logger.e(snapshot.error);
+          // logger.e(snapshot.error);
           return Container();
         }
         if (onGetServicesDone != null) onGetServicesDone();

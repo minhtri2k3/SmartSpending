@@ -1,19 +1,21 @@
-
-
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../core/export.dart';
 import 'core/mixins.dart';
 import 'firebase_options.dart';
 
-
-Future<void> setupMyApp() async{
-  GetIt.I.registerSingletonAsync<SMRouterService>(SMRouterService().init,);
+Future<void> setupMyApp() async {
+  GetIt.I.registerSingletonAsync<SMRouterService>(
+    SMRouterService().init,
+  );
+  GetIt.I.registerLazySingletonAsync<SMThemeService>(
+    SMThemeService().init,
+  );
   GetIt.I.registerSingletonAsync<FToast>(
-        () async => FToast(),
+    () async => FToast(),
   );
   GetIt.I.registerSingletonAsync<Logger>(
-        () async => Logger(
+    () async => Logger(
       printer: PrettyPrinter(
         methodCount: 0,
         colors: false,
@@ -25,22 +27,22 @@ Future<void> setupMyApp() async{
     ),
   );
 }
-Future<void> runMyApp() async{
+
+Future<void> runMyApp() async {
   await setupMyApp();
   runApp(
-   ScreenUtilInit(
-      designSize:  const Size(375, 812),
+    ScreenUtilInit(
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       useInheritedMediaQuery: true,
       child: MyApp(),
     ),
   );
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // await SentryFlutter.init(
   //       (options) {options.dsn = HTHCSettings.sentryDSN;
   //     options.tracesSampleRate = 1.0;
@@ -50,16 +52,16 @@ void main() async {
   runMyApp();
 }
 
-class MyApp extends StatelessWidget with SMServices , SMWidgetMainBuilder {
-   MyApp({super.key}){
-     getServicesFuture = getServices();
+class MyApp extends StatelessWidget with SMServices, SMWidgetMainBuilder {
+  MyApp({super.key}) {
+    getServicesFuture = getServices();
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return mainBuilder(
-          (context) {
+      (context) {
         return MaterialApp.router(
           title: 'LuuTruKyNiem',
           theme: ThemeData(

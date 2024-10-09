@@ -1,9 +1,9 @@
 import '../core/export.dart';
 
-class SmMainScreen extends StatelessWidget
+class SMMainScreen extends StatelessWidget
     with SMServices, SMWidgetMainBuilder {
   StatefulNavigationShell navigationShell;
-  SmMainScreen({
+  SMMainScreen({
     super.key,
     required this.navigationShell,
   }) {
@@ -19,25 +19,26 @@ class SmMainScreen extends StatelessWidget
           currentIndex: navigationShell.currentIndex,
           type: BottomNavigationBarType.fixed,
           iconSize: themeService.bottomBarItemIconSize,
+          selectedItemColor: themeService.bottomBarItemSelectedColor,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
               label: 'Kỷ niệm',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.food_bank_outlined),
               label: 'Quán ăn',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.restaurant_menu_outlined),
               label: 'Tự nấu',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.flight_outlined),
               label: 'Du lich',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.travel_explore_outlined),
               label: 'Dự tính',
             ),
           ],
