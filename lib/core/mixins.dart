@@ -9,7 +9,7 @@ mixin SMServices {
   late final SMRouterService routerService;
   late final SMThemeService themeService;
   late final FToast fToast;
-  // late final Logger logger;
+  late final Logger logger;
 
   late final GoRouter router;
 
@@ -21,7 +21,7 @@ mixin SMServices {
     routerService = await getIt.getAsync<SMRouterService>();
     themeService = await getIt.getAsync<SMThemeService>();
     fToast = await getIt.getAsync<FToast>();
-    // logger = await getIt.getAsync<Logger>();
+    logger = await getIt.getAsync<Logger>();
 
     router = routerService.router;
 
@@ -45,7 +45,7 @@ mixin SMWidgetMainBuilder on SMServices {
           return Container();
         }
         if (snapshot.hasError) {
-          // logger.e(snapshot.error);
+          logger.e(snapshot.error);
           return Container();
         }
         if (onGetServicesDone != null) onGetServicesDone();

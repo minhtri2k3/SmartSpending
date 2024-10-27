@@ -1,5 +1,4 @@
-import 'package:image_picker/image_picker.dart';
-
+import 'dart:io';
 import '../core/export.dart';
 
 part 'sm_home_screen.g.dart';
@@ -11,19 +10,85 @@ abstract class _SMHomeScreenController extends SMBaseController with Store {
   @observable
   bool loading = true;
 
+  @observable
+  Widget? loadingIndicator;
+
+  @observable
+  CropController? portraitCropController;
+
+  @observable
+  Widget? portraitCropDialog;
+
+  @observable
+  Widget? portraitCropButtons;
+
   @action
   void setLoading(bool loading_) => loading = loading_;
 
   @action
+  void showLoadingIndicator() =>
+      loadingIndicator = themeService.loadingIndicator;
+
+  @action
+  void hideLoadingIndicator() => loadingIndicator = null;
+
+  @action
+  void hidePortraitCropDialog() {
+    portraitCropDialog = null;
+    portraitCropController = null;
+  }
+
+  @action
+  void hidePortraitCropButtons() => portraitCropButtons = null;
+
+  @action
+  void showPortraitCropButtons() {
+    if (portraitCropController == null) return;
+    hideLoadingIndicator();
+    portraitCropButtons = SafeArea(
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(20.r),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SMButton.create(
+                instanceName: 'CropCancel',
+                width: 150.w,
+                title: 'HỦY',
+                onTap: () {
+                  hidePortraitCropButtons();
+                  hidePortraitCropDialog();
+                },
+              ),
+              const Expanded(child: SizedBox()),
+              SMButton.create(
+                instanceName: 'CropSubmit',
+                width: 150.w,
+                title: 'XONG',
+                onTap: () => portraitCropController!.crop(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @action
   Future<void> getData() async {
-    try {} on DioException catch (error, stackTrace) {
+    try {
+
+    } on DioException catch (error, stackTrace) {
       // onApiException(error, stackTrace);
     } catch (error, stackTrace) {
-      // logger.e(
-      //   error,
-      //   error: error,
-      //   stackTrace: stackTrace,
-      // );
+      logger.e(
+        error,
+        error: error,
+        stackTrace: stackTrace,
+      );
     }
   }
 
@@ -32,6 +97,49 @@ abstract class _SMHomeScreenController extends SMBaseController with Store {
     final ImagePicker imagePicker = ImagePicker();
     final XFile? image = await imagePicker.pickImage(source: imageSource);
     if (image == null) return;
+    showLoadingIndicator();
+    showPortraitCropDialog(await image.readAsBytes());
+  }
+
+  @action
+  void showPortraitCropDialog(Uint8List image) {
+    portraitCropController = CropController();
+    portraitCropDialog = Stack(
+      children: [
+        Crop(
+          image: image,
+          controller: portraitCropController,
+          withCircleUi: true,
+          maskColor: themeService.cropDialogMaskColor,
+          baseColor: themeService.cropDialogBaseColor,
+          onStatusChanged: (status) {
+            switch (status) {
+              case CropStatus.cropping:
+                showLoadingIndicator();
+                break;
+              case CropStatus.ready:
+                showPortraitCropButtons();
+                break;
+              default:
+                break;
+            }
+          },
+          onCropped: (image) {
+            portrait = image;
+            hideLoadingIndicator();
+            hidePortraitCropButtons();
+            hidePortraitCropDialog();
+            // updatePortrait(image);
+          },
+        ),
+        Observer(
+          builder: (context) => Offstage(
+            offstage: portraitCropButtons == null,
+            child: portraitCropButtons,
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -58,10 +166,15 @@ class SMHomeScreen extends SMBaseWidget<SMHomeScreenState> {
 }
 
 class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
+  XFile? _pickedImage;
   SMHomeScreenState({
     required super.instanceName,
     required super.controller,
   });
+  Widget get loadingIndicator => SpinKitFadingCircle(
+    size: 50.r,
+    color: SMColors.blue1,
+  );
   Widget buttonInfo(IconData icon, String text) {
     return Row(
       mainAxisAlignment:
@@ -87,7 +200,14 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
       ],
     );
   }
-
+  Future<void> _pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _pickedImage = XFile(pickedFile.path);
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return mainBuilder(
@@ -115,11 +235,13 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
                           Container(
                             height: 250.h,
                             width: double.infinity,
-                            decoration: const BoxDecoration(
+                            decoration:  BoxDecoration(
+                              color: Colors.white,
                               image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://i.imgur.com/1tMFzp8.png'),
-                                fit: BoxFit.cover,
+                                image: _pickedImage != null
+                                    ? FileImage(File(_pickedImage!.path))// Use picked image
+                                    : const AssetImage("images/home.png") as ImageProvider,
+                                fit: BoxFit.fill,
                               ),
                             ),
                             child: Column(
@@ -131,14 +253,14 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
                                 Container(
                                   margin: themeService.leftHomeInsets,
                                   child: Text(
-                                    'Titles',
+                                    'Kỷ niệm',
                                     style: themeService.titleHomeTextStyle,
                                   ),
                                 ),
                                 Container(
                                   margin: themeService.leftHomeInsets,
                                   child: Text(
-                                    'Subtitles',
+                                    'Nơi lưu dữ kỷ niệm',
                                     style: themeService.subtitleHomeTextStyle,
                                   ),
                                 ),
@@ -159,6 +281,7 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
                                         child: GestureDetector(
                                           onTap: () {
                                             // Handle Minus Button Tap
+                                            _pickedImage;
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
@@ -200,10 +323,15 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
                                                     8) // Rounded corners if needed
                                                 ),
                                             alignment: Alignment.center,
-                                            child: buttonInfo(
-                                              Icons.filter,
-                                              'Filter',
-                                            ), // Plus Icon
+                                            child: GestureDetector(
+                                              child: buttonInfo(
+                                                Icons.image_outlined,
+                                                'Change image',
+                                              ),
+                                              onTap: (){
+                                                _pickedImage;
+                                              },
+                                            ) // Plus Icon
                                           ),
                                         ),
                                       ),

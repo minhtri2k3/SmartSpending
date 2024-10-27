@@ -1,15 +1,15 @@
-import 'package:google_fonts/google_fonts.dart';
 
 import '../core/export.dart';
 class SMColors{
   static const Color white1 = Color(0xFFFFFFFF);
   static const Color blue1 =  Color(0xff152534);
-
+  static const Color black1 = Color(0x11111180);
 }
 class SMThemeService{
    Future<SMThemeService> init() async{
      return this;
    }
+
    Color getColorFromHex(String hexColor) {
      hexColor = hexColor.toUpperCase().replaceAll('#', '');
      if (hexColor.length == 6) {
@@ -18,8 +18,16 @@ class SMThemeService{
      return Color(int.parse(hexColor, radix: 16));
    }
 
-   double get bottomBarItemIconSize => 26.r;
    Color get bottomBarItemSelectedColor => SMColors.blue1;
+   Color get cropDialogMaskColor => SMColors.blue1.withOpacity(0.6);
+   Color get cropDialogBaseColor => SMColors.white1;
+   Color get buttonShadowColor => SMColors.blue1.withOpacity(0.5);
+   Color get buttonBackgroundColor => SMColors.blue1;
+   Color get buttonFocusColor => SMColors.white1.withOpacity(0.1);
+   Color get buttonHoverColor => SMColors.white1.withOpacity(0.1);
+   Color get buttonHighlightColor => SMColors.white1.withOpacity(0.1);
+   Color get buttonSplashColor => SMColors.white1.withOpacity(0.1);
+   Color get logoSplashColor => SMColors.black1.withOpacity(0.5);
 
    LinearGradient get blackGradientTheme {
        return const LinearGradient(
@@ -45,18 +53,27 @@ class SMThemeService{
      );
    }
 
+   double get bottomBarItemIconSize => 26.r;
+   double get buttonHeight => 44.h;
+
+   TextStyle get buttonTitleTextStyle => GoogleFonts.openSans(
+     fontSize: 16.sp,
+     fontWeight: FontWeight.bold,
+     color: SMColors.white1,
+   );
+
    TextStyle get titleHomeTextStyle => GoogleFonts.openSans(
      fontSize: 30.sp,
      fontWeight: FontWeight.bold,
      fontStyle: FontStyle.italic,
    );
+
    TextStyle get subtitleHomeTextStyle => GoogleFonts.openSans(
      fontSize: 10.sp,
      fontWeight: FontWeight.normal,
      fontStyle: FontStyle.italic,
    );
-   EdgeInsetsGeometry get leftHomeInsets => EdgeInsets.only(left: 25.sp,);
-   EdgeInsetsGeometry get rightHomeInsets => EdgeInsets.only(right: 25.sp,);
+
    TextStyle get buttonTextStyle => GoogleFonts.openSans(
      fontSize: 13.sp,
      fontWeight: FontWeight.bold,
@@ -64,4 +81,18 @@ class SMThemeService{
      color: Colors.white,
    );
 
+   EdgeInsetsGeometry get leftHomeInsets => EdgeInsets.only(left: 25.sp,);
+   EdgeInsetsGeometry get rightHomeInsets => EdgeInsets.only(right: 25.sp,);
+
+   Widget get loadingIndicator => Container(
+     width: double.infinity,
+     height: double.infinity,
+     color: SMColors.blue1.withOpacity(0.5),
+     child: Center(
+       child: SpinKitFadingCircle(
+         size: 50.r,
+         color: SMColors.white1,
+       ),
+     ),
+   );
 }

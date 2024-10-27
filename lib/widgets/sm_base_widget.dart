@@ -1,6 +1,5 @@
 
 import '../core/export.dart';
-import '../core/mixins.dart';
 
 abstract class SMBaseController with SMServices {}
 

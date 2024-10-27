@@ -1,6 +1,9 @@
 
 import 'dart:io';
 
+import 'package:gallery_picker/gallery_picker.dart';
+import 'package:gallery_picker/models/media_file.dart';
+
 import '../core/export.dart';
 
 class SMImage {
