@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import '../core/export.dart';
 
 part 'sm_home_screen.g.dart';
@@ -12,16 +11,10 @@ abstract class _SMHomeScreenController extends SMBaseController with Store {
   bool loading = true;
 
   @observable
-  int activeIndex = 0;
-
-  @observable
   Widget? loadingIndicator;
 
   @observable
   CropController? portraitCropController;
-
-  @observable
-  Uint8List? portrait;
 
   @observable
   Widget? portraitCropDialog;
@@ -86,7 +79,9 @@ abstract class _SMHomeScreenController extends SMBaseController with Store {
 
   @action
   Future<void> getData() async {
-    try {} on DioException catch (error, stackTrace) {
+    try {
+
+    } on DioException catch (error, stackTrace) {
       // onApiException(error, stackTrace);
     } catch (error, stackTrace) {
       logger.e(
@@ -130,7 +125,7 @@ abstract class _SMHomeScreenController extends SMBaseController with Store {
             }
           },
           onCropped: (image) {
-            portrait = image;
+            // portrait = image;
             hideLoadingIndicator();
             hidePortraitCropButtons();
             hidePortraitCropDialog();
@@ -176,12 +171,10 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
     required super.instanceName,
     required super.controller,
   });
-
   Widget get loadingIndicator => SpinKitFadingCircle(
-        size: 50.r,
-        color: SMColors.blue1,
-      );
-
+    size: 50.r,
+    color: SMColors.blue1,
+  );
   Widget buttonInfo(IconData icon, String text) {
     return Row(
       mainAxisAlignment:
@@ -207,150 +200,14 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
       ],
     );
   }
-
-  Widget get imageMemory => CarouselSlider(
-        items: [
-          'images/home.jpg',
-          'images/picture1.jpg',
-          'images/picture2.jpg',
-        ].map((imagePath) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24.r),
-                  image: DecorationImage(
-                    image: AssetImage(imagePath),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              );
-            },
-          );
-        }).toList(),
-        options: CarouselOptions(
-          height: 300.h,
-          viewportFraction: 1.0,
-          // Full width slides
-          enlargeCenterPage: true,
-          autoPlay: true,
-          onPageChanged: (index, reason) {
-            setState(() {
-              controller.activeIndex = index;
-            });
-          },
-        ),
-      );
-
-  Widget get memoryContainer => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 120.sp,
-          ),
-          Container(
-            margin: themeService.leftHomeInsets,
-            child: Text(
-              'Kỷ niệm',
-              style: themeService.titleHomeTextStyle,
-            ),
-          ),
-          Container(
-            margin: themeService.leftHomeInsets,
-            child: Text(
-              'Nơi lưu dữ kỷ niệm',
-              style: themeService.subtitleHomeTextStyle,
-            ),
-          ),
-          SizedBox(
-            height: 8.sp,
-          ),
-          Row(
-            children: [
-              // Left Button (Minus Icon)
-              Expanded(
-                child: Container(
-                  height: 50.h,
-                  margin:
-                      themeService.leftHomeInsets, // Adjust margin as needed
-                  padding: EdgeInsets.symmetric(
-                      vertical:
-                          8.sp), // Optional: Add padding inside the button
-                  child: GestureDetector(
-                    onTap: () {
-                      // Handle Minus Button Tap
-                      _pickedImage;
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: themeService
-                            .blackGradientTheme, // Button background color
-                        borderRadius: BorderRadius.circular(
-                            8) // Rounded corners if needed
-                        ,
-                      ),
-                      // alignment: Alignment.center,
-                      child: buttonInfo(
-                        Icons.calendar_month_outlined,
-                        'Add memory',
-                      ), // Minus Icon
-                    ),
-                  ),
-                ),
-              ),
-
-              // Right Button (Plus Icon)
-              SizedBox(
-                width: 40.sp,
-              ),
-              Expanded(
-                child: Container(
-                  height: 50.h,
-                  margin:
-                      themeService.rightHomeInsets, // Adjust margin as needed
-                  padding: EdgeInsets.symmetric(
-                    vertical: 8.sp,
-                  ), // Optional: Add padding inside the button
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                        decoration: BoxDecoration(
-                            gradient: themeService
-                                .blackGradientTheme, // Button background color
-                            borderRadius: BorderRadius.circular(
-                                8) // Rounded corners if needed
-                            ),
-                        alignment: Alignment.center,
-                        child: GestureDetector(
-                          child: buttonInfo(
-                            Icons.image_outlined,
-                            'Change image',
-                          ),
-                          onTap: () {
-                            _pickedImage;
-                          },
-                        ) // Plus Icon
-                        ),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      );
-
   Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _pickedImage = XFile(pickedFile.path);
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return mainBuilder(
@@ -376,16 +233,14 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            height: 300.h,
+                            height: 250.h,
                             width: double.infinity,
-                            decoration: BoxDecoration(
+                            decoration:  BoxDecoration(
                               color: Colors.white,
                               image: DecorationImage(
                                 image: _pickedImage != null
-                                    ? FileImage(File(
-                                        _pickedImage!.path)) // Use picked image
-                                    : const AssetImage("images/home.png")
-                                        as ImageProvider,
+                                    ? FileImage(File(_pickedImage!.path))// Use picked image
+                                    : const AssetImage("images/home.png") as ImageProvider,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -461,24 +316,23 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
                                         child: GestureDetector(
                                           onTap: () {},
                                           child: Container(
-                                              decoration: BoxDecoration(
-                                                  gradient: themeService
-                                                      .blackGradientTheme, // Button background color
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8) // Rounded corners if needed
-                                                  ),
-                                              alignment: Alignment.center,
-                                              child: GestureDetector(
-                                                child: buttonInfo(
-                                                  Icons.image_outlined,
-                                                  'Change image',
+                                            decoration: BoxDecoration(
+                                                gradient: themeService
+                                                    .blackGradientTheme, // Button background color
+                                                borderRadius: BorderRadius.circular(
+                                                    8) // Rounded corners if needed
                                                 ),
-                                                onTap: () {
-                                                  _pickedImage;
-                                                },
-                                              ) // Plus Icon
+                                            alignment: Alignment.center,
+                                            child: GestureDetector(
+                                              child: buttonInfo(
+                                                Icons.image_outlined,
+                                                'Change image',
                                               ),
+                                              onTap: (){
+                                                _pickedImage;
+                                              },
+                                            ) // Plus Icon
+                                          ),
                                         ),
                                       ),
                                     ),

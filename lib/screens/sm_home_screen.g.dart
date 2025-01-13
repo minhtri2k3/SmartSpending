@@ -25,22 +25,6 @@ mixin _$SMHomeScreenController on _SMHomeScreenController, Store {
     });
   }
 
-  late final _$activeIndexAtom =
-      Atom(name: '_SMHomeScreenController.activeIndex', context: context);
-
-  @override
-  int get activeIndex {
-    _$activeIndexAtom.reportRead();
-    return super.activeIndex;
-  }
-
-  @override
-  set activeIndex(int value) {
-    _$activeIndexAtom.reportWrite(value, super.activeIndex, () {
-      super.activeIndex = value;
-    });
-  }
-
   late final _$loadingIndicatorAtom =
       Atom(name: '_SMHomeScreenController.loadingIndicator', context: context);
 
@@ -71,22 +55,6 @@ mixin _$SMHomeScreenController on _SMHomeScreenController, Store {
     _$portraitCropControllerAtom
         .reportWrite(value, super.portraitCropController, () {
       super.portraitCropController = value;
-    });
-  }
-
-  late final _$portraitAtom =
-      Atom(name: '_SMHomeScreenController.portrait', context: context);
-
-  @override
-  Uint8List? get portrait {
-    _$portraitAtom.reportRead();
-    return super.portrait;
-  }
-
-  @override
-  set portrait(Uint8List? value) {
-    _$portraitAtom.reportWrite(value, super.portrait, () {
-      super.portrait = value;
     });
   }
 
@@ -222,10 +190,8 @@ mixin _$SMHomeScreenController on _SMHomeScreenController, Store {
   String toString() {
     return '''
 loading: ${loading},
-activeIndex: ${activeIndex},
 loadingIndicator: ${loadingIndicator},
 portraitCropController: ${portraitCropController},
-portrait: ${portrait},
 portraitCropDialog: ${portraitCropDialog},
 portraitCropButtons: ${portraitCropButtons}
     ''';
