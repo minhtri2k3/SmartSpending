@@ -4,6 +4,10 @@ class SMColors {
   static const Color white1 = Color(0xFFFFFFFF);
   static const Color blue1 = Color(0xff152534);
   static const Color black1 = Color(0x11111180);
+  static const Color primaryColor = Color(0xffBAE162);
+  static const Color darkBlue = Color(0xff1E2E3D);
+  static const Color darkerBlue = Color(0xff152534);
+  static const Color darkestBlue = Color(0xff0C1C2E);
 }
 
 class SMThemeService {
@@ -51,6 +55,52 @@ class SMThemeService {
     );
   }
 
+  // static const List<Color> defaultGradient = [
+  //   darkBlue,
+  //   darkerBlue,
+  //   darkestBlue,
+  // ];
+  //
+  // static const List<Color> blueGradient = [
+  //   Color(0xFF020024), // Start color
+  //   Color(0xFF090979),
+  //   Color(0xFF00d4ff), // End color
+  // ];
+  LinearGradient get mainScreenGradientTheme {
+    return const LinearGradient(
+      colors: [
+        Color(0xFF020024), // Start color
+        Color(0xFF090979),
+        Color(0xFF00d4ff),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+  }
+
+  LinearGradient get restaurantScreenGradientTheme {
+    return const LinearGradient(
+      colors: [
+        Color(0xFFE18AAA), // Start color
+        Color(0xFFEFCFD4),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+  }
+
+  LinearGradient get restaurantStarGradientTheme {
+    return const LinearGradient(
+      colors: [
+        Color(0xFF833ab4), // Start color
+        Color(0xFFfd1d1d),
+        Color(0xFFfcb045),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+  }
+
   LinearGradient get lightBlueGradientTheme {
     return const LinearGradient(
       colors: [
@@ -76,6 +126,12 @@ class SMThemeService {
   TextStyle get routeSelectedTextStyle =>
       GoogleFonts.openSans(color: SMColors.white1, fontWeight: FontWeight.bold);
 
+  TextStyle get appBarTitleTextStyle => GoogleFonts.playfair(
+        color: Colors.white, // Title color
+        fontSize: 25.sp, // Adjust the font size
+        fontWeight: FontWeight.bold, // Optional: Make the title bold
+      );
+
   TextStyle get titleHomeTextStyle => GoogleFonts.openSans(
         fontSize: 30.sp,
         fontWeight: FontWeight.bold,
@@ -92,6 +148,24 @@ class SMThemeService {
         fontSize: 13.sp,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
+        color: Colors.white,
+      );
+
+  TextStyle get restaurantNameTextStyle => GoogleFonts.playfair(
+        fontSize: 27.sp,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      );
+
+  TextStyle get restaurantTitleTextStyle => GoogleFonts.playfair(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFFFBF0C4),
+      );
+
+  TextStyle get restaurantContentTextStyle => GoogleFonts.playfair(
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w700,
         color: Colors.white,
       );
 

@@ -15,6 +15,7 @@ final GlobalKey<NavigatorState> planNavigatorKey =
 
 class SMRouterService {
   late GoRouter router;
+
   Future<SMRouterService> init() async {
     router = GoRouter(
       navigatorKey: rootNavigatorKey,
@@ -54,7 +55,7 @@ class SMRouterService {
               routes: [
                 GoRoute(
                   path: '/restaurant',
-                  builder: (context, state) => SMHomeScreen.create(),
+                  builder: (context, state) => SMEatScreen.create(),
                 ),
               ],
             ),

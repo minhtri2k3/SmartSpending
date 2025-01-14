@@ -13,4 +13,10 @@ class AppColors {
     darkerBlue,
     darkestBlue,
   ];
+
+  static const List<Color> blueGradient = [
+    Color(0xFF020024), // Start color
+    Color(0xFF090979),
+    Color(0xFF00d4ff), // End color
+  ];
 }
