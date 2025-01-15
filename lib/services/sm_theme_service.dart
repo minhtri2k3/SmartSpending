@@ -46,6 +46,12 @@ class SMThemeService {
 
   Color get heartFoodColor => SMColors.skinny;
 
+  Color get memoryLastStackColor => SMColors.white1.withOpacity(0.3);
+
+  Color get memorySecondStackColor => SMColors.white1.withOpacity(0.7);
+
+  Color get memoryFirstStackColor => SMColors.white1;
+
   LinearGradient get blackGradientTheme {
     return const LinearGradient(
       colors: [
@@ -80,6 +86,15 @@ class SMThemeService {
       end: Alignment.bottomRight,
     );
   }
+
+  LinearGradient get memoryThemeGradient => LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          SMColors.white1.withOpacity(0.3),
+          SMColors.white1,
+        ],
+      );
 
   LinearGradient get restaurantScreenGradientTheme {
     return const LinearGradient(

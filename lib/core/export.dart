@@ -1,8 +1,10 @@
 export 'dart:io';
 export 'dart:typed_data'; // Use this consistently
 
+export 'package:carousel_slider/carousel_slider.dart';
 export 'package:crop_your_image/crop_your_image.dart';
 export 'package:dio/dio.dart';
+export 'package:dotted_line/dotted_line.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter/gestures.dart';
@@ -16,10 +18,14 @@ export 'package:go_router/go_router.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:http_parser/http_parser.dart' show MediaType;
 export 'package:image_picker/image_picker.dart';
+export 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 export 'package:logger/logger.dart';
 export 'package:mobx/mobx.dart' hide Interceptor, Interceptors;
 export 'package:pretty_dio_logger/pretty_dio_logger.dart';
+export 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+export '../models/sm_memory.dart';
+export '../models/sm_restaurant.dart';
 export '../screens/sm_authstate_screen.dart';
 export '../screens/sm_eat_screen.dart';
 export '../screens/sm_home_screen.dart';

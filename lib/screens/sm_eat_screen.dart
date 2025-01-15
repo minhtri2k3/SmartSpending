@@ -1,9 +1,4 @@
-import 'package:dotted_line/dotted_line.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
 import '../core/export.dart';
-import '../models/sm_restaurant.dart';
-
 part 'sm_eat_screen.g.dart';
 
 class SMEatScreenController = _SMEatScreenController

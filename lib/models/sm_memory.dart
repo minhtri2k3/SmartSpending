@@ -17,19 +17,33 @@ List<SMMemory> memories = [
     name: "Đánh giấu cột mốc yêu",
     date: "21/04/2024",
     description: "Ngày tôi yêu em",
-    images: ["images/restaurants/test.png"],
+    images: [
+      "images/restaurants/test.png",
+      "images/restaurants/test.png",
+      "images/restaurants/test.png",
+      "images/restaurants/test.png"
+    ],
   ),
   SMMemory(
     name: "Đánh giấu cột mốc yêu",
     date: "21/04/2024",
     description: "Ngày tôi yêu em",
-    images: ["images/restaurants/test.png"],
+    images: [
+      "images/restaurants/test.png",
+      "images/restaurants/test.png",
+      "images/restaurants/test.png",
+      "images/restaurants/test.png"
+    ],
   ),
   SMMemory(
     name: "Đánh giấu cột mốc yêu",
     date: "21/04/2024",
     description: "Ngày tôi yêu em",
-    images: ["images/restaurants/test.png"],
+    images: [
+      "images/restaurants/test.png",
+      "images/restaurants/test.png",
+      "images/restaurants/test.png"
+    ],
   ),
   SMMemory(
     name: "Đánh giấu cột mốc yêu",
