@@ -8,6 +8,7 @@ class SMColors {
   static const Color darkBlue = Color(0xff1E2E3D);
   static const Color darkerBlue = Color(0xff152534);
   static const Color darkestBlue = Color(0xff0C1C2E);
+  static const Color skinny = Color(0xFFFBF0C4);
 }
 
 class SMThemeService {
@@ -43,6 +44,8 @@ class SMThemeService {
 
   Color get logoSplashColor => SMColors.black1.withOpacity(0.5);
 
+  Color get heartFoodColor => SMColors.skinny;
+
   LinearGradient get blackGradientTheme {
     return const LinearGradient(
       colors: [
@@ -55,17 +58,6 @@ class SMThemeService {
     );
   }
 
-  // static const List<Color> defaultGradient = [
-  //   darkBlue,
-  //   darkerBlue,
-  //   darkestBlue,
-  // ];
-  //
-  // static const List<Color> blueGradient = [
-  //   Color(0xFF020024), // Start color
-  //   Color(0xFF090979),
-  //   Color(0xFF00d4ff), // End color
-  // ];
   LinearGradient get mainScreenGradientTheme {
     return const LinearGradient(
       colors: [
@@ -73,6 +65,17 @@ class SMThemeService {
         Color(0xFF090979),
         Color(0xFF00d4ff),
       ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
+  }
+
+  LinearGradient get memoryScreenGradientTheme {
+    return const LinearGradient(
+      colors: [
+        Color(0xffd8e1f4),
+        Color(0xff94bbe9)
+      ], // Replace with your desired colors
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
     );

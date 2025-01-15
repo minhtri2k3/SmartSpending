@@ -1,4 +1,3 @@
-import 'dart:io';
 import '../core/export.dart';
 
 part 'sm_home_screen.g.dart';
@@ -13,15 +12,6 @@ abstract class _SMHomeScreenController extends SMBaseController with Store {
   @observable
   Widget? loadingIndicator;
 
-  @observable
-  CropController? portraitCropController;
-
-  @observable
-  Widget? portraitCropDialog;
-
-  @observable
-  Widget? portraitCropButtons;
-
   @action
   void setLoading(bool loading_) => loading = loading_;
 
@@ -33,55 +23,8 @@ abstract class _SMHomeScreenController extends SMBaseController with Store {
   void hideLoadingIndicator() => loadingIndicator = null;
 
   @action
-  void hidePortraitCropDialog() {
-    portraitCropDialog = null;
-    portraitCropController = null;
-  }
-
-  @action
-  void hidePortraitCropButtons() => portraitCropButtons = null;
-
-  @action
-  void showPortraitCropButtons() {
-    if (portraitCropController == null) return;
-    hideLoadingIndicator();
-    portraitCropButtons = SafeArea(
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(20.r),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SMButton.create(
-                instanceName: 'CropCancel',
-                width: 150.w,
-                title: 'HỦY',
-                onTap: () {
-                  hidePortraitCropButtons();
-                  hidePortraitCropDialog();
-                },
-              ),
-              const Expanded(child: SizedBox()),
-              SMButton.create(
-                instanceName: 'CropSubmit',
-                width: 150.w,
-                title: 'XONG',
-                onTap: () => portraitCropController!.crop(),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  @action
   Future<void> getData() async {
-    try {
-
-    } on DioException catch (error, stackTrace) {
+    try {} on DioException catch (error, stackTrace) {
       // onApiException(error, stackTrace);
     } catch (error, stackTrace) {
       logger.e(
@@ -90,56 +33,6 @@ abstract class _SMHomeScreenController extends SMBaseController with Store {
         stackTrace: stackTrace,
       );
     }
-  }
-
-  @action
-  Future<void> getImage(ImageSource imageSource) async {
-    final ImagePicker imagePicker = ImagePicker();
-    final XFile? image = await imagePicker.pickImage(source: imageSource);
-    if (image == null) return;
-    showLoadingIndicator();
-    showPortraitCropDialog(await image.readAsBytes());
-  }
-
-  @action
-  void showPortraitCropDialog(Uint8List image) {
-    portraitCropController = CropController();
-    portraitCropDialog = Stack(
-      children: [
-        Crop(
-          image: image,
-          controller: portraitCropController,
-          withCircleUi: true,
-          maskColor: themeService.cropDialogMaskColor,
-          baseColor: themeService.cropDialogBaseColor,
-          onStatusChanged: (status) {
-            switch (status) {
-              case CropStatus.cropping:
-                showLoadingIndicator();
-                break;
-              case CropStatus.ready:
-                showPortraitCropButtons();
-                break;
-              default:
-                break;
-            }
-          },
-          onCropped: (image) {
-            // portrait = image;
-            hideLoadingIndicator();
-            hidePortraitCropButtons();
-            hidePortraitCropDialog();
-            // updatePortrait(image);
-          },
-        ),
-        Observer(
-          builder: (context) => Offstage(
-            offstage: portraitCropButtons == null,
-            child: portraitCropButtons,
-          ),
-        ),
-      ],
-    );
   }
 }
 
@@ -166,195 +59,43 @@ class SMHomeScreen extends SMBaseWidget<SMHomeScreenState> {
 }
 
 class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
-  XFile? _pickedImage;
   SMHomeScreenState({
     required super.instanceName,
     required super.controller,
   });
+
   Widget get loadingIndicator => SpinKitFadingCircle(
-    size: 50.r,
-    color: SMColors.blue1,
-  );
-  Widget buttonInfo(IconData icon, String text) {
-    return Row(
-      mainAxisAlignment:
-          MainAxisAlignment.spaceBetween, // Space between Icon and Text
-      children: [
-        Padding(
-          padding: EdgeInsets.only(
-            left: 10.sp,
-          ),
-          child: Icon(
-            icon,
-            color: Colors.white,
-            size: 10.sp,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: 10.sp),
-          child: Text(
-            text,
-            style: themeService.buttonTextStyle,
-          ),
-        ),
-      ],
-    );
-  }
-  Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _pickedImage = XFile(pickedFile.path);
-      });
-    }
-  }
+        size: 50.r,
+        color: SMColors.blue1,
+      );
+
+  Widget get getBody => Container();
+
   @override
   Widget build(BuildContext context) {
     return mainBuilder(
       (context) => Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: SMColors.white1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFFEF7FF),
-                    ),
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 250.h,
-                            width: double.infinity,
-                            decoration:  BoxDecoration(
-                              color: Colors.white,
-                              image: DecorationImage(
-                                image: _pickedImage != null
-                                    ? FileImage(File(_pickedImage!.path))// Use picked image
-                                    : const AssetImage("images/home.png") as ImageProvider,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 120.sp,
-                                ),
-                                Container(
-                                  margin: themeService.leftHomeInsets,
-                                  child: Text(
-                                    'Kỷ niệm',
-                                    style: themeService.titleHomeTextStyle,
-                                  ),
-                                ),
-                                Container(
-                                  margin: themeService.leftHomeInsets,
-                                  child: Text(
-                                    'Nơi lưu dữ kỷ niệm',
-                                    style: themeService.subtitleHomeTextStyle,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8.sp,
-                                ),
-                                Row(
-                                  children: [
-                                    // Left Button (Minus Icon)
-                                    Expanded(
-                                      child: Container(
-                                        height: 50.h,
-                                        margin: themeService
-                                            .leftHomeInsets, // Adjust margin as needed
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 8
-                                                .sp), // Optional: Add padding inside the button
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            // Handle Minus Button Tap
-                                            _pickedImage;
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              gradient: themeService
-                                                  .blackGradientTheme, // Button background color
-                                              borderRadius: BorderRadius.circular(
-                                                  8) // Rounded corners if needed
-                                              ,
-                                            ),
-                                            // alignment: Alignment.center,
-                                            child: buttonInfo(
-                                              Icons.calendar_month_outlined,
-                                              'Add memory',
-                                            ), // Minus Icon
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-
-                                    // Right Button (Plus Icon)
-                                    SizedBox(
-                                      width: 40.sp,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        height: 50.h,
-                                        margin: themeService
-                                            .rightHomeInsets, // Adjust margin as needed
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 8.sp,
-                                        ), // Optional: Add padding inside the button
-                                        child: GestureDetector(
-                                          onTap: () {},
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                gradient: themeService
-                                                    .blackGradientTheme, // Button background color
-                                                borderRadius: BorderRadius.circular(
-                                                    8) // Rounded corners if needed
-                                                ),
-                                            alignment: Alignment.center,
-                                            child: GestureDetector(
-                                              child: buttonInfo(
-                                                Icons.image_outlined,
-                                                'Change image',
-                                              ),
-                                              onTap: (){
-                                                _pickedImage;
-                                              },
-                                            ) // Plus Icon
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          const Center(
-                            child: Text(
-                              'Hello',
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+        appBar: AppBar(
+          title: Text(
+            'Lưu giữ ký ức',
+            style: themeService.appBarTitleTextStyle,
+          ),
+          centerTitle: true,
+          // Centers the title
+          backgroundColor: Colors.transparent,
+          // Transparent to show gradient
+          elevation: 0,
+          // Remove shadow for a clean look
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: themeService.memoryScreenGradientTheme,
             ),
           ),
         ),
+        body: SafeArea(
+          child: getBody,
+        ),
+        backgroundColor: Color(0xFFecf1fa),
       ),
       onGetServicesDone: () => controller.getData(),
     );

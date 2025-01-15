@@ -63,7 +63,7 @@ class SMEatScreenState extends SMBaseWidgetState<SMEatScreenController> {
       final int currentPage = 1;
       final int lastPage = 1;
       final bool isLastPage = currentPage == lastPage;
-      final List<SMRestaurant> newItems = restaurant;
+      final List<SMRestaurant> newItems = restaurants;
       if (isLastPage) {
         pagingController.appendLastPage(newItems);
       } else {
@@ -157,6 +157,40 @@ class SMEatScreenState extends SMBaseWidgetState<SMEatScreenController> {
         ),
       );
 
+  Widget favorContent(String title, String content) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: themeService.restaurantTitleTextStyle,
+                ),
+                spacer,
+                spacer,
+                spacer,
+                Icon(
+                  Icons.favorite,
+                  color: themeService.heartFoodColor,
+                )
+              ],
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
+            Text(
+              content,
+              style: themeService.restaurantContentTextStyle,
+            ),
+          ],
+        ),
+      );
+
   Widget itemBuilder(
     BuildContext context,
     SMRestaurant item,
@@ -204,6 +238,10 @@ class SMEatScreenState extends SMBaseWidgetState<SMEatScreenController> {
             imageLoad(item.image!),
             spacer,
             itemContent('Địa chỉ', item.address),
+            spacer,
+            item.favor != null
+                ? favorContent('Vợ thích', item.favor ?? "")
+                : Container(),
             spacer,
             itemContent('Ghi chú', item.note!),
           ],
