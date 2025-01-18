@@ -2,12 +2,21 @@ import '../core/export.dart';
 
 class SMColors {
   static const Color white1 = Color(0xFFFFFFFF);
+
   static const Color blue1 = Color(0xff152534);
+  static const Color blue2 = Color(0xff94bbe9);
+
   static const Color black1 = Color(0x11111180);
+
   static const Color primaryColor = Color(0xffBAE162);
+
+  static const Color pink = Color(0xffE4A0B7);
+  static const Color pink2 = Color(0xffECBDC4);
+
   static const Color darkBlue = Color(0xff1E2E3D);
   static const Color darkerBlue = Color(0xff152534);
   static const Color darkestBlue = Color(0xff0C1C2E);
+
   static const Color skinny = Color(0xFFFBF0C4);
 }
 
@@ -185,6 +194,24 @@ class SMThemeService {
         fontSize: 18.sp,
         fontWeight: FontWeight.w700,
         color: Colors.white,
+      );
+
+  TextStyle get memoryNameTextStyle => GoogleFonts.playfair(
+        fontSize: 27.sp,
+        fontWeight: FontWeight.bold,
+        color: SMColors.blue2,
+      );
+
+  TextStyle get memoryTitleTextStyle => GoogleFonts.playfair(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.bold,
+        color: SMColors.pink,
+      );
+
+  TextStyle get memoryContentTextStyle => GoogleFonts.playfair(
+        fontSize: 18.sp,
+        fontWeight: FontWeight.w700,
+        color: SMColors.pink2,
       );
 
   EdgeInsetsGeometry get leftHomeInsets => EdgeInsets.only(

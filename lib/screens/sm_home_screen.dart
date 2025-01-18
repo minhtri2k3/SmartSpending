@@ -268,22 +268,25 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
             Radius.circular(20.r), // Border radius of 20.r
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              memory.name,
-              style: themeService.restaurantNameTextStyle,
-            ),
-            Text(
-              memory.date,
-              style: themeService.restaurantTitleTextStyle,
-            ),
-            Text(
-              memory.description,
-              style: themeService.restaurantContentTextStyle,
-            ),
-          ],
+        child: Padding(
+          padding: EdgeInsets.all(20.sp),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                memory.name,
+                style: themeService.memoryNameTextStyle,
+              ),
+              Text(
+                memory.date,
+                style: themeService.memoryTitleTextStyle,
+              ),
+              Text(
+                memory.description,
+                style: themeService.memoryContentTextStyle,
+              ),
+            ],
+          ),
         ),
       );
 
@@ -298,6 +301,7 @@ class SMHomeScreenState extends SMBaseWidgetState<SMHomeScreenController> {
         memoryContent(item),
         dashLine,
         memoryPictureContainer(item.images),
+        dashLine,
       ],
     );
   }
