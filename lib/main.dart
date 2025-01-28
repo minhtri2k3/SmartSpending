@@ -1,9 +1,7 @@
-import 'package:sentry_flutter/sentry_flutter.dart';
-
 import '../core/export.dart';
-import 'core/mixins.dart';
 import 'firebase_options.dart';
 
+// Happy new year 2025
 Future<void> setupMyApp() async {
   GetIt.I.registerSingletonAsync<SMRouterService>(
     SMRouterService().init,
