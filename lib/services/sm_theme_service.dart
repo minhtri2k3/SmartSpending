@@ -55,6 +55,10 @@ class SMThemeService {
 
   Color get heartFoodColor => SMColors.skinny;
 
+  Color get calendarColor => SMColors.skinny;
+
+  Color get markedDayColor => SMColors.pink;
+
   Color get memoryLastStackColor => SMColors.white1.withOpacity(0.3);
 
   Color get memorySecondStackColor => SMColors.white1.withOpacity(0.7);
@@ -212,6 +216,12 @@ class SMThemeService {
         fontSize: 18.sp,
         fontWeight: FontWeight.w700,
         color: SMColors.pink2,
+      );
+
+  TextStyle get specialDayTextStyle => GoogleFonts.dancingScript(
+        fontSize: 17.sp,
+        fontWeight: FontWeight.w500,
+        color: Colors.white,
       );
 
   EdgeInsetsGeometry get leftHomeInsets => EdgeInsets.only(

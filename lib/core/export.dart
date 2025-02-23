@@ -23,6 +23,7 @@ export 'package:logger/logger.dart';
 export 'package:mobx/mobx.dart' hide Interceptor, Interceptors;
 export 'package:pretty_dio_logger/pretty_dio_logger.dart';
 export 'package:smooth_page_indicator/smooth_page_indicator.dart';
+export 'package:table_calendar/table_calendar.dart';
 
 export '../models/sm_memory.dart';
 export '../models/sm_restaurant.dart';

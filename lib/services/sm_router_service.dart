@@ -1,4 +1,5 @@
 import '../core/export.dart';
+import '../screens/sm_plan_screen.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'rootNavigatorKey');
@@ -82,7 +83,7 @@ class SMRouterService {
               routes: [
                 GoRoute(
                   path: '/plan',
-                  builder: (context, state) => SMHomeScreen.create(),
+                  builder: (context, state) => SMPlanScreen.create(),
                 ),
               ],
             ),
