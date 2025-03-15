@@ -41,6 +41,22 @@ mixin _$SMPlanScreenController on _SMPlanScreenController, Store {
     });
   }
 
+  late final _$dateTransferAtom =
+      Atom(name: '_SMPlanScreenController.dateTransfer', context: context);
+
+  @override
+  String get dateTransfer {
+    _$dateTransferAtom.reportRead();
+    return super.dateTransfer;
+  }
+
+  @override
+  set dateTransfer(String value) {
+    _$dateTransferAtom.reportWrite(value, super.dateTransfer, () {
+      super.dateTransfer = value;
+    });
+  }
+
   late final _$_selectedDateAtom =
       Atom(name: '_SMPlanScreenController._selectedDate', context: context);
 
@@ -67,6 +83,17 @@ mixin _$SMPlanScreenController on _SMPlanScreenController, Store {
 
   late final _$_SMPlanScreenControllerActionController =
       ActionController(name: '_SMPlanScreenController', context: context);
+
+  @override
+  void updateDateTransfer() {
+    final _$actionInfo = _$_SMPlanScreenControllerActionController.startAction(
+        name: '_SMPlanScreenController.updateDateTransfer');
+    try {
+      return super.updateDateTransfer();
+    } finally {
+      _$_SMPlanScreenControllerActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setLoading(bool loading_) {
@@ -105,7 +132,8 @@ mixin _$SMPlanScreenController on _SMPlanScreenController, Store {
   String toString() {
     return '''
 loading: ${loading},
-loadingIndicator: ${loadingIndicator}
+loadingIndicator: ${loadingIndicator},
+dateTransfer: ${dateTransfer}
     ''';
   }
 }

@@ -1,4 +1,5 @@
 import '../core/export.dart';
+
 part 'sm_eat_screen.g.dart';
 
 class SMEatScreenController = _SMEatScreenController
@@ -7,6 +8,51 @@ class SMEatScreenController = _SMEatScreenController
 abstract class _SMEatScreenController extends SMBaseController with Store {
   final PagingController<int, SMRestaurant> pagingController =
       PagingController(firstPageKey: 1);
+
+  Future<String> uploadImage(String path, XFile image) async {
+    try {
+      final Reference ref = FirebaseStorage.instance.ref().child(path);
+
+      final UploadTask uploadTask = ref.putFile(File(image.path));
+
+      final TaskSnapshot snapshot = await uploadTask;
+
+      final String downloadURL = await snapshot.ref.getDownloadURL();
+
+      return downloadURL;
+    } on FirebaseException catch (e) {
+      throw Exception('Firebase error: ${e.message}');
+    } on FormatException {
+      throw Exception('Invalid file format.');
+    } on PlatformException catch (e) {
+      throw Exception('Platform error: ${e.message}');
+    } catch (e) {
+      throw Exception('Something went wrong: $e');
+    }
+  }
+
+  Future<void> pickAndUploadImage(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      try {
+        final String downloadURL =
+            await uploadImage('uploads/${image.name}', image);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Image uploaded successfully: $downloadURL')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Upload failed: $e')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No image selected')),
+      );
+    }
+  }
 }
 
 class SMEatScreen extends SMBaseWidget<SMEatScreenState> {

@@ -47,6 +47,11 @@ void main() async {
   //   },
   //   appRunner: runMyApp,
   // );
+  FirebaseFirestore.instance.settings = Settings(
+    persistenceEnabled: false, // Disable offline persistence for debugging
+    cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
+  );
+
   runMyApp();
 }
 

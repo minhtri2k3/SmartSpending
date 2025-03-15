@@ -224,6 +224,11 @@ class SMThemeService {
         color: Colors.white,
       );
 
+  TextStyle get taskTextStyle => GoogleFonts.playfair(
+        fontSize: 20.sp,
+        fontWeight: FontWeight.bold,
+      );
+
   EdgeInsetsGeometry get leftHomeInsets => EdgeInsets.only(
         left: 25.sp,
       );

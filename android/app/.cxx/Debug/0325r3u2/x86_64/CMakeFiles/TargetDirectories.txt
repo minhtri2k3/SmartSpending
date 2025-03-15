@@ -1,0 +1,2 @@
+/Users/tringuyen/Library/CloudStorage/OneDrive-Personal/GitHub/SmartSpending/android/app/.cxx/Debug/0325r3u2/x86_64/CMakeFiles/rebuild_cache.dir
+/Users/tringuyen/Library/CloudStorage/OneDrive-Personal/GitHub/SmartSpending/android/app/.cxx/Debug/0325r3u2/x86_64/CMakeFiles/edit_cache.dir

@@ -1,10 +1,11 @@
-
 import 'export.dart';
 
 mixin SMServices {
   final GlobalKey widgetKey = GlobalKey();
   late final GetIt getIt = GetIt.instance;
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  // late final SMDatabaseService databaseService ;
 
   late final SMRouterService routerService;
   late final SMThemeService themeService;
@@ -22,6 +23,8 @@ mixin SMServices {
     themeService = await getIt.getAsync<SMThemeService>();
     fToast = await getIt.getAsync<FToast>();
     logger = await getIt.getAsync<Logger>();
+
+    // databaseService = await getIt.getAsync<SMDatabaseService>();
 
     router = routerService.router;
 
